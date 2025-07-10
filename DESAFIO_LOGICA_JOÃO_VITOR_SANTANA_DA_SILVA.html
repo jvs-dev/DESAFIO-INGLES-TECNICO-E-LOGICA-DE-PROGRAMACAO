@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let prices = []
+        let total = 0
+        let minPrice = null
+        let distance = parseFloat(prompt("Qual a distancia percorrida da sua casa até seu trabablho(em km)?"));
+        let consume = parseFloat(prompt("Qual o consumo médio do veículo (em Km/L)."));
+        alert(`O consumo necessário é ${distance / consume} litros`);
+        let pointsNum = parseInt(prompt("Em quantos postos você pesquisou?"));
+
+        for (let i = 0; i < pointsNum; i++) {
+            let price;
+            do {
+                price = parseFloat(prompt(`Digite o valor encontrado (em R$) no posto ${i + 1}:`));
+                if (isNaN(price)) {
+                    alert("Valor inválido. Por favor, digite um número para o preço.");
+                }
+            } while (isNaN(price));
+            prices.push(price);
+            total = total + price;
+        }
+
+        prices.forEach(el => {
+            if (minPrice == null) {
+                minPrice = el
+            } else {
+                minPrice > el ? minPrice = el : null
+            }
+        });
+        alert(`O menor valor pesquisado é R$ ${minPrice}`);
+        alert(`A média dos valores pesquisados é R$ ${(total / prices.length).toFixed(2)}`);
+        alert(`O gasto diário (ida e volta) é R$ ${((distance / consume) * minPrice).toFixed(2)}`);
+    </script>
+
+</body>
+
+</html>
