@@ -5,19 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 40px;
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        .title {
+            margin: 0px 0px 20px 0px;
+            font-weight: 700;
+        }
+
+        .list {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
-
+    <h1 class="title">Dados Registrados:</h1>
+    <ul id="listData" class="list">        
+    </ul>
     <script>
+        let allData = []
+        let listData = document.getElementById("listData")        
         let prices = []
         let total = 0
         let minPrice = null
         let distance = parseFloat(prompt("Qual a distancia percorrida da sua casa até seu trabablho(em km)?"));
+        allData.push(`Distancia da sua casa até o trabalho: ${distance}`)
         let consume = parseFloat(prompt("Qual o consumo médio do veículo (em Km/L)."));
+        allData.push(`O consumo médio do veículo (em Km/L): ${consume}`)
         alert(`O consumo necessário é ${distance / consume} litros`);
+        allData.push(`Consumo necessário para ir até o trabalho: ${distance}`)
         let pointsNum = parseInt(prompt("Em quantos postos você pesquisou?"));
-
+        allData.push(`Você pesquiou em: ${pointsNum} postos`)
         for (let i = 0; i < pointsNum; i++) {
             let price;
             do {
@@ -27,9 +53,10 @@
                 }
             } while (isNaN(price));
             prices.push(price);
+            allData.push(`Preço ${i}: ${price}`)
             total = total + price;
-        }
-
+        }        
+        allData.push(`Total: ${total}`)
         prices.forEach(el => {
             if (minPrice == null) {
                 minPrice = el
@@ -37,9 +64,15 @@
                 minPrice > el ? minPrice = el : null
             }
         });
+        allData.push(`Menor preço: ${minPrice}`)
         alert(`O menor valor pesquisado é R$ ${minPrice}`);
         alert(`A média dos valores pesquisados é R$ ${(total / prices.length).toFixed(2)}`);
         alert(`O gasto diário (ida e volta) é R$ ${((distance / consume) * minPrice).toFixed(2)}`);
+        allData.forEach(element => {
+            let li = document.createElement("li")
+            listData.insertAdjacentElement("beforeend", li)
+            li.textContent = `${element}`
+        });        
     </script>
 
 </body>
